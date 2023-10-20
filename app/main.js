@@ -7,9 +7,9 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((socket) => {
   socket.on("data", (req) => {
     // const STATUS_LINE = "HTTP/1.1 200 OK";
-    const CRLF = "\r\n";
+    // const CRLF = "\r\n";
     // socket.write(`${STATUS_LINE} ${CRLF}${CRLF}`);
-    const parts = req.split(CRLF);
+    const parts = req.split("\r\n");
     const path = parts[1];
 
     if (path[0] === "/") {
