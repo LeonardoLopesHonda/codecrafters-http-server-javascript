@@ -10,12 +10,13 @@ const server = net.createServer((socket) => {
     const CRLF = "\r\n";
     // socket.write(`${STATUS_LINE} ${CRLF}${CRLF}`);
     const parts = req.toString().split("\r\n");
-    const path = parts[1];
+    const startLine = parts[0];
+    const path = startLine.split(" ")[1];
 
     let status = "404 Not Found";
     if (path === "/") status = "200 OK";
 
-    socket.write(`HTTP/1.1 ${status}${CRLF}`);
+    socket.write(`HTTP/1.1 ${status}${CRLF}${CRLF}`);
     socket.end();
   });
   socket.on("close", () => {
