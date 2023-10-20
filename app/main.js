@@ -11,11 +11,11 @@ const server = net.createServer((socket) => {
     // socket.write(`${STATUS_LINE} ${CRLF}${CRLF}`);
     const parts = req.toString().split("\r\n");
     const startLine = parts[0];
-
+    console.log("received:", parts, startLine);
     const [method, path, version] = startLine.split(" ");
     console.log({ method, path, version });
 
-    if (path[-1] === "/") {
+    if (path === "/") {
       socket.write("200 OK");
     } else {
       socket.write("404 NOT FOUND");
