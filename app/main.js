@@ -7,20 +7,15 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((socket) => {
   socket.on("data", (req) => {
     // const STATUS_LINE = "HTTP/1.1 200 OK";
-    // const CRLF = "\r\n";
+    const CRLF = "\r\n";
     // socket.write(`${STATUS_LINE} ${CRLF}${CRLF}`);
     const parts = req.toString().split("\r\n");
-    const startLine = parts[0];
-    console.log("received:", parts, startLine);
-    const [method, path, version] = startLine.split(" ");
-    console.log({ method, path, version });
+    const path = parts[1];
 
-    if (path === "/") {
-      socket.write("200 OK");
-    } else {
-      socket.write("404 NOT FOUND");
-    }
+    let status = "404 Not Found";
+    if (path === "/") status = "200 OK";
 
+    socket.write(`HTTP/1.1 ${status}${CRLF}`);
     socket.end();
   });
   socket.on("close", () => {
