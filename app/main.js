@@ -12,7 +12,7 @@ const server = net.createServer((socket) => {
     const parts = req.split("\r\n");
     const path = parts[1];
 
-    if (path === "/") {
+    if (path[-1] === "/") {
       socket.write("200 OK");
     } else {
       socket.write("404 NOT FOUND");
